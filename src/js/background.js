@@ -235,7 +235,7 @@ async function handleMessage(message, sender, sendResponse) {
 browser.runtime.onInstalled.addListener(() => {
   browser.contextMenus.create({
     id: 'ai-float-chat-send',
-    title: '发送到 AI Chat',
+    title: '发送到 miniQuestion',
     contexts: ['selection']
   });
 });

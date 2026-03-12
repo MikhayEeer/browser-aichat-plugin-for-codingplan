@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Float Chat",
+  "name": "miniQuestion",
   "version": "1.0.0",
-  "description": "An open AI chat floating widget with custom API configuration",
+  "description": "A lightweight AI chat assistant for quick questions. Bring your own API key.",
   "author": "Danzel",
 
   "permissions": [
@@ -40,7 +40,7 @@
       "48": "src/assets/icon48.png",
       "128": "src/assets/icon128.png"
     },
-    "default_title": "AI Float Chat"
+    "default_title": "miniQuestion"
   },
 
   "icons": {
