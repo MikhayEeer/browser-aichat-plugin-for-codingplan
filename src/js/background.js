@@ -246,6 +246,12 @@ async function handleMessage(message, sender, sendResponse) {
         sendResponse({ success: true });
         break;
 
+      case 'openOptions':
+        // 打开扩展设置页面
+        browser.runtime.openOptionsPage();
+        sendResponse({ success: true });
+        break;
+
       default:
         sendResponse({ success: false, error: 'Unknown action' });
     }

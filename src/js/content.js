@@ -273,6 +273,10 @@ function checkConfig() {
           </div>
         </div>
         <button class="ai-config-btn" id="ai-open-settings">开始配置</button>
+        <div class="ai-manual-config">
+          <p>如按钮无效，请手动打开设置：</p>
+          <p>扩展管理 → miniQuestion → 扩展程序选项</p>
+        </div>
         <p class="ai-supported-apis">
           支持：OpenAI / Claude / DeepSeek / OpenRouter / 本地模型
         </p>
@@ -388,11 +392,8 @@ async function clearChat() {
 
 // 打开设置
 function openSettings() {
+  // 通过 background.js 打开设置页面
   browser.runtime.sendMessage({ action: 'openOptions' });
-  // 打开扩展设置页面
-  if (typeof browser !== 'undefined' && browser.runtime) {
-    browser.runtime.openOptionsPage();
-  }
 }
 
 // 输入框自动高度
