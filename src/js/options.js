@@ -4,6 +4,7 @@ if (typeof browser === 'undefined') {
 }
 
 // DOM 元素
+const apiTypeSelect = document.getElementById('apiType');
 const baseUrlInput = document.getElementById('baseUrl');
 const apiKeyInput = document.getElementById('apiKey');
 const modelInput = document.getElementById('model');
@@ -16,6 +17,7 @@ const statusDiv = document.getElementById('status');
 async function loadConfig() {
   const response = await browser.runtime.sendMessage({ action: 'getConfig' });
   if (response.success && response.data) {
+    apiTypeSelect.value = response.data.apiType || 'openai';
     baseUrlInput.value = response.data.baseUrl || '';
     apiKeyInput.value = response.data.apiKey || '';
     modelInput.value = response.data.model || '';
@@ -26,6 +28,7 @@ async function loadConfig() {
 // 保存配置
 async function saveConfig() {
   const config = {
+    apiType: apiTypeSelect.value,
     baseUrl: baseUrlInput.value.trim().replace(/\/$/, ''), // 移除末尾斜杠
     apiKey: apiKeyInput.value.trim(),
     model: modelInput.value.trim(),
@@ -52,6 +55,7 @@ async function saveConfig() {
 // 测试连接
 async function testConnection() {
   const config = {
+    apiType: apiTypeSelect.value,
     baseUrl: baseUrlInput.value.trim().replace(/\/$/, ''),
     apiKey: apiKeyInput.value.trim(),
     model: modelInput.value.trim(),
@@ -69,7 +73,8 @@ async function testConnection() {
   try {
     const response = await browser.runtime.sendMessage({
       action: 'chat',
-      messages: [{ role: 'user', content: 'Hi' }]
+      messages: [{ role: 'user', content: 'Hi' }],
+      config: config  // 传递当前配置用于测试
     });
 
     if (response.success) {
@@ -100,9 +105,11 @@ function showStatus(message, type) {
 // 快速填充模板
 document.querySelectorAll('.template-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    const type = btn.dataset.type;
     const base = btn.dataset.base;
     const model = btn.dataset.model;
 
+    if (type) apiTypeSelect.value = type;
     if (base) baseUrlInput.value = base;
     if (model) modelInput.value = model;
   });

@@ -67,7 +67,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    select {
       width: 100%;
       padding: 12px 14px;
       border: 1px solid #ddd;
@@ -75,9 +76,11 @@
       font-size: 14px;
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
+      background: white;
     }
 
-    input:focus {
+    input:focus,
+    select:focus {
       border-color: #667eea;
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
@@ -188,6 +191,15 @@
       <div class="card-title">API 配置</div>
 
       <div class="form-group">
+        <label for="apiType">API 类型</label>
+        <select id="apiType">
+          <option value="openai">OpenAI 兼容</option>
+          <option value="anthropic">Anthropic (Claude)</option>
+        </select>
+        <p class="hint">OpenAI 兼容格式支持 OpenAI、DeepSeek、OpenRouter、本地模型等</p>
+      </div>
+
+      <div class="form-group">
         <label for="baseUrl">Base URL</label>
         <input type="text" id="baseUrl" placeholder="https://api.openai.com/v1">
         <p class="hint">API 服务地址，如: https://api.openai.com/v1</p>
@@ -214,10 +226,10 @@
       <div class="templates">
         <h3>快速填充常用服务</h3>
         <div class="template-list">
-          <button class="template-btn" data-base="https://api.openai.com/v1" data-model="gpt-4o-mini">OpenAI</button>
-          <button class="template-btn" data-base="https://api.anthropic.com/v1" data-model="claude-3-sonnet">Anthropic</button>
-          <button class="template-btn" data-base="https://api.deepseek.com/v1" data-model="deepseek-chat">DeepSeek</button>
-          <button class="template-btn" data-base="https://openrouter.ai/api/v1" data-model="auto">OpenRouter</button>
+          <button class="template-btn" data-type="openai" data-base="https://api.openai.com/v1" data-model="gpt-4o-mini">OpenAI</button>
+          <button class="template-btn" data-type="anthropic" data-base="https://api.anthropic.com" data-model="claude-sonnet-4-20250514">Anthropic</button>
+          <button class="template-btn" data-type="openai" data-base="https://api.deepseek.com/v1" data-model="deepseek-chat">DeepSeek</button>
+          <button class="template-btn" data-type="openai" data-base="https://openrouter.ai/api/v1" data-model="auto">OpenRouter</button>
         </div>
       </div>
 

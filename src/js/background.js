@@ -8,7 +8,8 @@ const DEFAULT_CONFIG = {
   baseUrl: '',
   apiKey: '',
   model: '',
-  maxTokens: 2048
+  maxTokens: 2048,
+  apiType: 'openai'  // openai | anthropic
 };
 
 // 获取配置
@@ -40,6 +41,16 @@ async function clearChatHistory() {
 
 // 调用 AI API
 async function callAI(messages, config) {
+  const apiType = config.apiType || 'openai';
+
+  if (apiType === 'anthropic') {
+    return await callAnthropicAPI(messages, config);
+  }
+  return await callOpenAIAPI(messages, config);
+}
+
+// OpenAI 兼容 API 调用
+async function callOpenAIAPI(messages, config) {
   const response = await fetch(`${config.baseUrl}/chat/completions`, {
     method: 'POST',
     headers: {
@@ -63,28 +74,32 @@ async function callAI(messages, config) {
   return data.choices[0].message.content;
 }
 
-// 翻译文本
-async function translateText(text, config) {
-  const response = await fetch(`${config.baseUrl}/chat/completions`, {
+// Anthropic API 调用
+async function callAnthropicAPI(messages, config) {
+  // Anthropic 不支持 system 在 messages 里，需要单独提取
+  let systemPrompt = '';
+  const filteredMessages = [];
+
+  for (const msg of messages) {
+    if (msg.role === 'system') {
+      systemPrompt = msg.content;
+    } else {
+      filteredMessages.push(msg);
+    }
+  }
+
+  const response = await fetch(`${config.baseUrl}/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${config.apiKey}`
+      'x-api-key': config.apiKey,
+      'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
       model: config.model,
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a professional translator. Translate the following English text to Chinese. Only output the translation result, no explanations.'
-        },
-        {
-          role: 'user',
-          content: text
-        }
-      ],
-      max_tokens: 2000,
-      stream: false
+      max_tokens: config.maxTokens,
+      system: systemPrompt || undefined,
+      messages: filteredMessages
     })
   });
 
@@ -94,7 +109,25 @@ async function translateText(text, config) {
   }
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  return data.content[0].text;
+}
+
+// 翻译文本
+async function translateText(text, config) {
+  const messages = [
+    {
+      role: 'system',
+      content: 'You are a professional translator. Translate the following English text to Chinese. Only output the translation result, no explanations.'
+    },
+    {
+      role: 'user',
+      content: text
+    }
+  ];
+
+  // 复用 callAI，但使用较小的 max_tokens
+  const translateConfig = { ...config, maxTokens: 2000 };
+  return await callAI(messages, translateConfig);
 }
 
 // 监听来自 content script 的消息
@@ -132,7 +165,8 @@ async function handleMessage(message, sender, sendResponse) {
         break;
 
       case 'chat':
-        const chatConfig = await getConfig();
+        // 支持传入配置（用于测试）或使用已保存的配置
+        const chatConfig = message.config || await getConfig();
         if (!chatConfig.baseUrl || !chatConfig.apiKey || !chatConfig.model) {
           sendResponse({ success: false, error: '请先配置 API' });
           break;
