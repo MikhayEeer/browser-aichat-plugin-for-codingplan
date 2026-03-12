@@ -24,7 +24,7 @@ const state = {
   isTranslating: false,
   // 外观配置
   appearance: {
-    theme: 'purple',
+    theme: 'blue',
     icon: 'globe',
     customIcon: null
   }
