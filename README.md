@@ -2,6 +2,8 @@
 
 一个轻量的 AI 对话悬浮窗浏览器扩展，支持任意 OpenAI 兼容 API。
 
+> **重要说明**：本插件不提供 AI 服务，需要你自备 API Key。插件只是一个调用工具，所有 AI 能力来自你配置的第三方 API。
+
 ## 为什么做这个
 
 现有 AI 悬浮窗/侧边栏插件（Monica、Sider、MaxAI 等）存在以下问题：
@@ -23,6 +25,7 @@
 ## 特性
 
 - **开放 API 配置** - 自定义 BaseURL / API Key / Model
+- **多 API 格式** - 支持 OpenAI 兼容格式和 Anthropic 原生 API
 - **悬浮球交互** - 可拖拽，点击展开对话面板
 - **划词翻译** - 选中文本自动翻译（英→中）
 - **右键发送** - 选中页面文本快速发送到对话
@@ -43,15 +46,25 @@
 
 ## 配置
 
-首次使用需配置 API：
+首次使用需配置你自己的 API：
 
 | 字段 | 说明 | 示例 |
 |------|------|------|
+| API 类型 | OpenAI 兼容 或 Anthropic | OpenAI 兼容 |
 | Base URL | API 服务地址 | `https://api.openai.com/v1` |
 | API Key | 你的密钥 | `sk-...` |
 | Model | 模型名称 | `gpt-4o-mini` |
 
-支持的 API 服务：OpenAI、DeepSeek、OpenRouter、本地模型（Ollama、LM Studio）等所有 OpenAI 兼容 API。
+**支持的 API 服务：**
+
+| 服务 | API 类型 | Base URL |
+|------|----------|----------|
+| OpenAI | OpenAI 兼容 | `https://api.openai.com/v1` |
+| Anthropic Claude | Anthropic | `https://api.anthropic.com` |
+| DeepSeek | OpenAI 兼容 | `https://api.deepseek.com/v1` |
+| OpenRouter | OpenAI 兼容 | `https://openrouter.ai/api/v1` |
+| Ollama (本地) | OpenAI 兼容 | `http://localhost:11434/v1` |
+| LM Studio (本地) | OpenAI 兼容 | `http://localhost:1234/v1` |
 
 ## 使用
 
