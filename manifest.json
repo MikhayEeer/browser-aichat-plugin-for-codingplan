@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "AI Float Chat",
+  "version": "1.0.0",
+  "description": "An open AI chat floating widget with custom API configuration",
+  "author": "Danzel",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "src/js/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["src/js/content.js"],
+    "css": ["src/css/float.css"],
+    "run_at": "document_idle"
+  }],
+
+  "options_page": "src/options.html",
+
+  "action": {
+    "default_icon": {
+      "16": "src/assets/icon16.png",
+      "48": "src/assets/icon48.png",
+      "128": "src/assets/icon128.png"
+    },
+    "default_title": "AI Float Chat"
+  },
+
+  "icons": {
+    "16": "src/assets/icon16.png",
+    "48": "src/assets/icon48.png",
+    "128": "src/assets/icon128.png"
+  },
+
+  "web_accessible_resources": [{
+    "resources": ["src/assets/*"],
+    "matches": ["<all_urls>"]
+  }]
+}
