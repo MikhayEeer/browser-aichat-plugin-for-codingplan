@@ -1,5 +1,7 @@
 # miniQuestion
 
+[English](./docs/README_EN.md) | 中文
+
 一个轻量的 AI 对话悬浮窗浏览器扩展，专注于解决小问题。
 
 > **重要说明**：本插件不提供 AI 服务，需要你自备 API Key。插件只是一个调用工具，所有 AI 能力来自你配置的第三方 API。
