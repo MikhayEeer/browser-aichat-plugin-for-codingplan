@@ -12,6 +12,23 @@ const DEFAULT_CONFIG = {
   apiType: 'openai'  // openai | anthropic
 };
 
+// 默认外观配置
+const DEFAULT_APPEARANCE = {
+  theme: 'purple',
+  icon: 'globe',
+  customIcon: null
+};
+
+// 主题配色
+const THEMES = {
+  purple: { primary: '#667eea', secondary: '#764ba2' },
+  blue: { primary: '#2196F3', secondary: '#1976D2' },
+  green: { primary: '#4CAF50', secondary: '#388E3C' },
+  orange: { primary: '#FF9800', secondary: '#F57C00' },
+  red: { primary: '#F44336', secondary: '#D32F2F' },
+  pink: { primary: '#E91E63', secondary: '#C2185B' }
+};
+
 // 获取配置
 async function getConfig() {
   const result = await browser.storage.sync.get('apiConfig');
@@ -21,6 +38,17 @@ async function getConfig() {
 // 保存配置
 async function saveConfig(config) {
   await browser.storage.sync.set({ apiConfig: config });
+}
+
+// 获取外观配置
+async function getAppearance() {
+  const result = await browser.storage.local.get('appearance');
+  return result.appearance || DEFAULT_APPEARANCE;
+}
+
+// 保存外观配置
+async function saveAppearance(appearance) {
+  await browser.storage.local.set({ appearance: appearance });
 }
 
 // 获取对话历史
@@ -183,6 +211,16 @@ async function handleMessage(message, sender, sendResponse) {
         }
         const translation = await translateText(message.text, translateConfig);
         sendResponse({ success: true, data: translation });
+        break;
+
+      case 'getAppearance':
+        const appearance = await getAppearance();
+        sendResponse({ success: true, data: appearance });
+        break;
+
+      case 'saveAppearance':
+        await saveAppearance(message.appearance);
+        sendResponse({ success: true });
         break;
 
       default:

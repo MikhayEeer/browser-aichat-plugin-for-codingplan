@@ -1,11 +1,20 @@
+/* CSS 变量 - 主题配置 */
+:root {
+  --ai-primary: #667eea;
+  --ai-secondary: #764ba2;
+  --ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --ai-shadow: rgba(102, 126, 234, 0.4);
+  --ai-shadow-hover: rgba(102, 126, 234, 0.5);
+}
+
 /* 悬浮球 */
 .ai-float-ball {
   position: fixed;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  background: var(--ai-gradient);
+  box-shadow: 0 4px 15px var(--ai-shadow);
   cursor: pointer;
   z-index: 2147483647;
   display: flex;
@@ -13,11 +22,12 @@
   justify-content: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   user-select: none;
+  overflow: hidden;
 }
 
 .ai-float-ball:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 20px var(--ai-shadow-hover);
 }
 
 .ai-float-ball:active {
@@ -28,6 +38,12 @@
   width: 24px;
   height: 24px;
   fill: white;
+}
+
+.ai-float-ball img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 /* 展开面板 */
@@ -57,7 +73,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   color: white;
 }
 
@@ -105,7 +121,7 @@
 
 .ai-message.ai-user {
   margin-left: auto;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   color: white;
 }
 
@@ -166,11 +182,11 @@
 }
 
 .ai-input:focus {
-  border-color: #667eea;
+  border-color: var(--ai-primary);
 }
 
 .ai-send-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   border: none;
   border-radius: 10px;
   padding: 10px 16px;
@@ -203,7 +219,7 @@
 .ai-loading span {
   width: 8px;
   height: 8px;
-  background: #667eea;
+  background: var(--ai-primary);
   border-radius: 50%;
   animation: ai-bounce 1.4s infinite ease-in-out both;
 }
@@ -229,6 +245,10 @@
 
 .ai-welcome-icon {
   margin-bottom: 16px;
+}
+
+.ai-welcome-icon svg {
+  fill: var(--ai-primary);
 }
 
 .ai-welcome-title {
@@ -265,7 +285,7 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   color: white;
   border-radius: 50%;
   font-size: 12px;
@@ -274,7 +294,7 @@
 }
 
 .ai-config-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   border: none;
   border-radius: 8px;
   padding: 12px 24px;
@@ -335,8 +355,8 @@
 }
 
 .ai-translate-trigger:hover {
-  background: #667eea;
-  border-color: #667eea;
+  background: var(--ai-primary);
+  border-color: var(--ai-primary);
   color: white;
 }
 
@@ -361,7 +381,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--ai-gradient);
   color: white;
 }
 
@@ -418,7 +438,7 @@
 .ai-translate-loading span {
   width: 8px;
   height: 8px;
-  background: #667eea;
+  background: var(--ai-primary);
   border-radius: 50%;
   animation: ai-bounce 1.4s infinite ease-in-out both;
 }
@@ -453,7 +473,7 @@
 }
 
 .ai-translate-btn:hover {
-  background: #667eea;
-  border-color: #667eea;
+  background: var(--ai-primary);
+  border-color: var(--ai-primary);
   color: white;
 }
