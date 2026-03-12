@@ -72,19 +72,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 10px 16px;
   background: var(--ai-gradient);
   color: white;
+  gap: 10px;
 }
 
 .ai-panel-title {
   font-weight: 600;
   font-size: 15px;
+  white-space: nowrap;
+}
+
+.ai-model-select {
+  flex: 1;
+  max-width: 140px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.ai-model-select option {
+  background: #333;
+  color: white;
 }
 
 .ai-panel-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .ai-panel-btn {

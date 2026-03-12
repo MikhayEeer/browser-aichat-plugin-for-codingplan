@@ -81,8 +81,8 @@
 
     input:focus,
     select:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
     }
 
     .hint {
@@ -91,14 +91,8 @@
       margin-top: 6px;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
     .btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: none;
       border-radius: 8px;
       font-size: 14px;
@@ -112,7 +106,7 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
       color: white;
     }
 
@@ -127,6 +121,26 @@
 
     .btn-secondary:hover {
       background: #e5e5e5;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
     }
 
     .status {
@@ -149,36 +163,69 @@
       color: #721c24;
     }
 
-    .templates {
-      margin-top: 24px;
+    /* 模型列表 */
+    .model-list {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
-    .templates h3 {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 12px;
-    }
-
-    .template-list {
+    .model-item {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+
+    .model-item:last-child {
+      border-bottom: none;
+    }
+
+    .model-item:hover {
+      background: #f8f9fa;
+    }
+
+    .model-item.selected {
+      background: #e3f2fd;
+    }
+
+    .model-info {
+      flex: 1;
+    }
+
+    .model-name {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .model-value {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .model-actions {
+      display: flex;
       gap: 8px;
     }
 
-    .template-btn {
-      padding: 8px 14px;
-      background: #f5f7fa;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
+    .model-empty {
+      padding: 24px;
+      text-align: center;
+      color: #888;
     }
 
-    .template-btn:hover {
-      background: #667eea;
-      border-color: #667eea;
-      color: white;
+    /* 添加模型 */
+    .add-model-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .add-model-form input {
+      flex: 1;
     }
 
     /* 主题选择 */
@@ -189,9 +236,9 @@
     }
 
     .theme-option {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
       cursor: pointer;
       border: 3px solid transparent;
       transition: all 0.2s;
@@ -211,7 +258,7 @@
     .theme-option .check {
       display: none;
       color: white;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .theme-option.active .check {
@@ -228,14 +275,14 @@
     /* 图标选择 */
     .icon-options {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
 
     .icon-option {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       cursor: pointer;
       border: 2px solid #e0e0e0;
@@ -244,7 +291,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
       overflow: hidden;
     }
 
@@ -254,24 +300,23 @@
 
     .icon-option.active {
       border-color: #333;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     }
 
     .icon-option svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       fill: white;
     }
 
     .icon-option img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
     }
 
     .icon-upload-btn {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       cursor: pointer;
       border: 2px dashed #ccc;
@@ -283,13 +328,12 @@
     }
 
     .icon-upload-btn:hover {
-      border-color: #667eea;
-      background: #eee;
+      border-color: #2196F3;
     }
 
     .icon-upload-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: #888;
     }
 
@@ -297,15 +341,14 @@
       display: none;
     }
 
-    /* 自定义图标预览 */
     .custom-icon-preview {
-      margin-top: 12px;
-      padding: 12px;
+      margin-top: 10px;
+      padding: 10px;
       background: #f5f7fa;
       border-radius: 8px;
       display: none;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .custom-icon-preview.show {
@@ -313,8 +356,8 @@
     }
 
     .custom-icon-preview img {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -331,6 +374,39 @@
       color: #dc3545;
       cursor: pointer;
       font-size: 13px;
+    }
+
+    /* 快速填充 */
+    .templates {
+      margin-top: 16px;
+    }
+
+    .templates h3 {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .template-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .template-btn {
+      padding: 6px 12px;
+      background: #f5f7fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .template-btn:hover {
+      background: #2196F3;
+      border-color: #2196F3;
+      color: white;
     }
   </style>
 </head>
@@ -354,7 +430,7 @@
       <div class="form-group">
         <label for="baseUrl">Base URL</label>
         <input type="text" id="baseUrl" placeholder="https://api.openai.com/v1">
-        <p class="hint">API 服务地址，如: https://api.openai.com/v1</p>
+        <p class="hint">API 服务地址</p>
       </div>
 
       <div class="form-group">
@@ -363,10 +439,42 @@
         <p class="hint">你的 API 密钥，本地存储，不会上传</p>
       </div>
 
+      <div class="templates">
+        <h3>快速填充</h3>
+        <div class="template-list">
+          <button class="template-btn" data-type="openai" data-base="https://api.openai.com/v1">OpenAI</button>
+          <button class="template-btn" data-type="anthropic" data-base="https://api.anthropic.com">Anthropic</button>
+          <button class="template-btn" data-type="openai" data-base="https://api.deepseek.com/v1">DeepSeek</button>
+          <button class="template-btn" data-type="openai" data-base="https://openrouter.ai/api/v1">OpenRouter</button>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" id="saveApiBtn">保存 API 配置</button>
+        <button class="btn btn-secondary" id="testBtn">测试连接</button>
+      </div>
+
+      <div class="status" id="apiStatus"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">模型管理</div>
+
       <div class="form-group">
-        <label for="model">Model</label>
-        <input type="text" id="model" placeholder="gpt-4o-mini">
-        <p class="hint">模型名称，如: gpt-4o, gpt-4o-mini, claude-3-sonnet 等</p>
+        <label>已添加的模型</label>
+        <div class="model-list" id="modelList">
+          <div class="model-empty">暂无模型，请添加</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>添加新模型</label>
+        <div class="add-model-form">
+          <input type="text" id="modelName" placeholder="显示名称（如：GPT-4o）">
+          <input type="text" id="modelValue" placeholder="模型 ID（如：gpt-4o）">
+          <button class="btn btn-primary btn-small" id="addModelBtn">添加</button>
+        </div>
+        <p class="hint">显示名称用于界面展示，模型 ID 是实际调用 API 时使用的值</p>
       </div>
 
       <div class="form-group">
@@ -375,22 +483,11 @@
         <p class="hint">最大输出 token 数</p>
       </div>
 
-      <div class="templates">
-        <h3>快速填充常用服务</h3>
-        <div class="template-list">
-          <button class="template-btn" data-type="openai" data-base="https://api.openai.com/v1" data-model="gpt-4o-mini">OpenAI</button>
-          <button class="template-btn" data-type="anthropic" data-base="https://api.anthropic.com" data-model="claude-sonnet-4-20250514">Anthropic</button>
-          <button class="template-btn" data-type="openai" data-base="https://api.deepseek.com/v1" data-model="deepseek-chat">DeepSeek</button>
-          <button class="template-btn" data-type="openai" data-base="https://openrouter.ai/api/v1" data-model="auto">OpenRouter</button>
-        </div>
-      </div>
-
       <div class="btn-group">
-        <button class="btn btn-primary" id="saveBtn">保存设置</button>
-        <button class="btn btn-secondary" id="testBtn">测试连接</button>
+        <button class="btn btn-primary" id="saveModelBtn">保存模型配置</button>
       </div>
 
-      <div class="status" id="status"></div>
+      <div class="status" id="modelStatus"></div>
     </div>
 
     <div class="card">
@@ -399,26 +496,13 @@
       <div class="form-group">
         <label>主题配色</label>
         <div class="theme-options">
-          <div class="theme-option theme-purple" data-theme="purple">
-            <span class="check">✓</span>
-          </div>
-          <div class="theme-option theme-blue active" data-theme="blue">
-            <span class="check">✓</span>
-          </div>
-          <div class="theme-option theme-green" data-theme="green">
-            <span class="check">✓</span>
-          </div>
-          <div class="theme-option theme-orange" data-theme="orange">
-            <span class="check">✓</span>
-          </div>
-          <div class="theme-option theme-red" data-theme="red">
-            <span class="check">✓</span>
-          </div>
-          <div class="theme-option theme-pink" data-theme="pink">
-            <span class="check">✓</span>
-          </div>
+          <div class="theme-option theme-purple" data-theme="purple"><span class="check">✓</span></div>
+          <div class="theme-option theme-blue active" data-theme="blue"><span class="check">✓</span></div>
+          <div class="theme-option theme-green" data-theme="green"><span class="check">✓</span></div>
+          <div class="theme-option theme-orange" data-theme="orange"><span class="check">✓</span></div>
+          <div class="theme-option theme-red" data-theme="red"><span class="check">✓</span></div>
+          <div class="theme-option theme-pink" data-theme="pink"><span class="check">✓</span></div>
         </div>
-        <p class="hint">选择你喜欢的主题颜色</p>
       </div>
 
       <div class="form-group">
@@ -439,7 +523,7 @@
           <div class="icon-option" data-icon="bolt">
             <svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>
           </div>
-          <label class="icon-upload-btn" id="uploadBtn" title="上传自定义图标">
+          <label class="icon-upload-btn" title="上传自定义图标">
             <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
             <input type="file" id="iconUpload" accept="image/*">
           </label>
@@ -449,7 +533,6 @@
           <span id="customIconName"></span>
           <button id="removeCustomIcon">移除</button>
         </div>
-        <p class="hint">选择预设图标或上传自定义图片（建议 48x48 像素）</p>
       </div>
 
       <div class="btn-group">

@@ -64,6 +64,9 @@ container.innerHTML = `
   <div class="ai-float-panel" id="ai-float-panel">
     <div class="ai-panel-header">
       <span class="ai-panel-title">miniQuestion</span>
+      <select class="ai-model-select" id="ai-model-select">
+        <option value="">选择模型</option>
+      </select>
       <div class="ai-panel-actions">
         <button class="ai-panel-btn" id="ai-clear-btn" title="清空对话">清空</button>
         <button class="ai-panel-btn" id="ai-settings-btn" title="设置">设置</button>
@@ -89,6 +92,7 @@ const input = document.getElementById('ai-input');
 const sendBtn = document.getElementById('ai-send-btn');
 const clearBtn = document.getElementById('ai-clear-btn');
 const settingsBtn = document.getElementById('ai-settings-btn');
+const modelSelect = document.getElementById('ai-model-select');
 
 // 初始化位置
 function initPosition() {
@@ -190,11 +194,32 @@ async function loadData() {
     // 应用外观
     applyAppearance();
 
+    // 渲染模型选择器
+    renderModelSelector();
+
     renderMessages();
     checkConfig();
   } catch (e) {
     console.error('Failed to load data:', e);
   }
+}
+
+// 渲染模型选择器
+function renderModelSelector() {
+  const models = state.config?.models || [];
+  const selectedModel = state.config?.selectedModel || '';
+
+  modelSelect.innerHTML = models.length === 0
+    ? '<option value="">请先添加模型</option>'
+    : models.map(m => `<option value="${m.id}" ${m.id === selectedModel ? 'selected' : ''}>${m.name}</option>`).join('');
+}
+
+// 获取当前选中的模型
+function getCurrentModel() {
+  const models = state.config?.models || [];
+  const selectedId = state.config?.selectedModel || '';
+  const selected = models.find(m => m.id === selectedId);
+  return selected?.model || (models.length > 0 ? models[0].model : '');
 }
 
 // 应用外观配置
@@ -220,12 +245,15 @@ function applyAppearance() {
 
 // 检查配置
 function checkConfig() {
-  if (!state.config || !state.config.baseUrl || !state.config.apiKey || !state.config.model) {
+  const hasApiConfig = state.config && state.config.baseUrl && state.config.apiKey;
+  const hasModels = state.config?.models && state.config.models.length > 0;
+
+  if (!hasApiConfig || !hasModels) {
     chatContainer.innerHTML = `
       <div class="ai-not-configured">
         <div class="ai-welcome-icon">
           <svg viewBox="0 0 24 24" width="48" height="48">
-            <path fill="#667eea" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            <path fill="var(--ai-primary)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
           </svg>
         </div>
         <h3 class="ai-welcome-title">欢迎使用 miniQuestion</h3>
@@ -233,15 +261,15 @@ function checkConfig() {
         <div class="ai-setup-steps">
           <div class="ai-step">
             <span class="ai-step-num">1</span>
-            <span>准备一个 OpenAI 兼容的 API Key</span>
+            <span>准备 API Key 和 Base URL</span>
           </div>
           <div class="ai-step">
             <span class="ai-step-num">2</span>
-            <span>点击下方按钮配置 Base URL 和密钥</span>
+            <span>在设置中添加模型</span>
           </div>
           <div class="ai-step">
             <span class="ai-step-num">3</span>
-            <span>测试连接成功后即可使用</span>
+            <span>选择模型开始对话</span>
           </div>
         </div>
         <button class="ai-config-btn" id="ai-open-settings">开始配置</button>
@@ -327,7 +355,8 @@ async function sendMessage() {
   try {
     const response = await browser.runtime.sendMessage({
       action: 'chat',
-      messages: state.messages
+      messages: state.messages,
+      model: getCurrentModel()
     });
 
     hideLoading();
@@ -406,7 +435,27 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     applyAppearance();
   }
 
+  // 监听配置更新
+  if (message.action === 'updateConfig' && message.config) {
+    state.config = message.config;
+    renderModelSelector();
+    checkConfig();
+  }
+
   return true;
+});
+
+// 模型选择变化
+modelSelect.addEventListener('change', () => {
+  const selectedId = modelSelect.value;
+  if (selectedId && state.config) {
+    state.config.selectedModel = selectedId;
+    // 保存选择
+    browser.runtime.sendMessage({
+      action: 'saveConfig',
+      config: state.config
+    });
+  }
 });
 
 // 初始化

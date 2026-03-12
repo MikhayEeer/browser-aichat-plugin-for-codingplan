@@ -7,9 +7,10 @@ if (typeof browser === 'undefined') {
 const DEFAULT_CONFIG = {
   baseUrl: '',
   apiKey: '',
-  model: '',
+  apiType: 'openai',  // openai | anthropic
   maxTokens: 2048,
-  apiType: 'openai'  // openai | anthropic
+  models: [],         // 模型列表 [{id, name, model}]
+  selectedModel: ''   // 当前选中的模型 ID
 };
 
 // 默认外观配置
@@ -49,6 +50,17 @@ async function getAppearance() {
 // 保存外观配置
 async function saveAppearance(appearance) {
   await browser.storage.local.set({ appearance: appearance });
+}
+
+// 获取选中的模型
+function getSelectedModel(config) {
+  if (!config || !config.models || config.models.length === 0) {
+    return '';
+  }
+
+  const selectedId = config.selectedModel;
+  const selected = config.models.find(m => m.id === selectedId);
+  return selected ? selected.model : config.models[0].model;
 }
 
 // 获取对话历史
@@ -194,22 +206,33 @@ async function handleMessage(message, sender, sendResponse) {
 
       case 'chat':
         // 支持传入配置（用于测试）或使用已保存的配置
-        const chatConfig = message.config || await getConfig();
-        if (!chatConfig.baseUrl || !chatConfig.apiKey || !chatConfig.model) {
-          sendResponse({ success: false, error: '请先配置 API' });
+        let chatConfig = message.config || await getConfig();
+
+        // 获取模型
+        const model = message.model || getSelectedModel(chatConfig);
+
+        if (!chatConfig.baseUrl || !chatConfig.apiKey || !model) {
+          sendResponse({ success: false, error: '请先配置 API 和模型' });
           break;
         }
-        const reply = await callAI(message.messages, chatConfig);
+
+        // 创建带有模型的配置
+        const configWithModel = { ...chatConfig, model };
+        const reply = await callAI(message.messages, configWithModel);
         sendResponse({ success: true, data: reply });
         break;
 
       case 'translate':
-        const translateConfig = await getConfig();
-        if (!translateConfig.baseUrl || !translateConfig.apiKey || !translateConfig.model) {
-          sendResponse({ success: false, error: '请先配置 API' });
+        let translateConfig = await getConfig();
+        const translateModel = getSelectedModel(translateConfig);
+
+        if (!translateConfig.baseUrl || !translateConfig.apiKey || !translateModel) {
+          sendResponse({ success: false, error: '请先配置 API 和模型' });
           break;
         }
-        const translation = await translateText(message.text, translateConfig);
+
+        const configForTranslate = { ...translateConfig, model: translateModel };
+        const translation = await translateText(message.text, configForTranslate);
         sendResponse({ success: true, data: translation });
         break;
 
