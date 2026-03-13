@@ -13,10 +13,13 @@ try {
 }
 
 const assetsDir = path.join(__dirname, '..', 'src', 'assets');
-const sourceImage = path.join(assetsDir, 'cat-has-question.jpg');
+// 优先使用 PNG，如果没有则使用 JPG
+const sourcePng = path.join(assetsDir, 'cat-has-question.png');
+const sourceJpg = path.join(assetsDir, 'cat-has-question.jpg');
+const sourceImage = fs.existsSync(sourcePng) ? sourcePng : sourceJpg;
 
 async function convertImage() {
-  console.log('开始转换 cat-has-question.jpg...\n');
+  console.log(`开始转换 ${path.basename(sourceImage)}...\n`);
 
   const conversions = [
     { output: 'icon16.png', size: 16 },
