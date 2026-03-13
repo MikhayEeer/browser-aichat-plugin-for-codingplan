@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "miniQuestion",
   "version": "1.0.0",
-  "description": "AI 助手悬浮球 - 支持多模型对话和划词翻译",
+  "description": "轻量 AI 悬浮窗 - 解决简单问题而不污染主对话上下文，支持自定义 API 配置适配你的 Coding Plan",
   "icons": {
     "16": "assets/icon16.png",
     "48": "assets/icon48.png",
