@@ -1,10 +1,10 @@
 /* CSS 变量 - 主题配置 */
 :root {
-  --ai-primary: #2196F3;
-  --ai-secondary: #1976D2;
-  --ai-gradient: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
-  --ai-shadow: rgba(33, 150, 243, 0.4);
-  --ai-shadow-hover: rgba(33, 150, 243, 0.5);
+  --ai-primary: #EDF7BD;
+  --ai-secondary: #D4E89A;
+  --ai-gradient: linear-gradient(135deg, #EDF7BD 0%, #D4E89A 100%);
+  --ai-shadow: rgba(237, 247, 189, 0.4);
+  --ai-shadow-hover: rgba(237, 247, 189, 0.5);
 }
 
 /* 悬浮球 */
@@ -37,7 +37,7 @@
 .ai-float-ball svg {
   width: 24px;
   height: 24px;
-  fill: white;
+  fill: #555;
 }
 
 .ai-float-ball img {
@@ -73,8 +73,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  background: var(--ai-gradient);
-  color: white;
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
+  color: #333;
   gap: 10px;
 }
 
@@ -90,8 +90,8 @@
   padding: 5px 8px;
   border: none;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
   font-size: 12px;
   cursor: pointer;
   outline: none;
@@ -108,11 +108,11 @@
 }
 
 .ai-panel-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 6px;
   padding: 6px 10px;
-  color: white;
+  color: #333;
   cursor: pointer;
   font-size: 12px;
   transition: background 0.2s;
@@ -142,7 +142,7 @@
 .ai-message.ai-user {
   margin-left: auto;
   background: var(--ai-gradient);
-  color: white;
+  color: #333;
 }
 
 .ai-message.ai-assistant {
@@ -170,7 +170,7 @@
 }
 
 .ai-user code {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* 输入区域 */
@@ -206,11 +206,11 @@
 }
 
 .ai-send-btn {
-  background: var(--ai-gradient);
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
   border: none;
   border-radius: 10px;
   padding: 10px 16px;
-  color: white;
+  color: #333;
   cursor: pointer;
   font-weight: 500;
   transition: opacity 0.2s, transform 0.1s;
@@ -239,7 +239,7 @@
 .ai-loading span {
   width: 8px;
   height: 8px;
-  background: var(--ai-primary);
+  background: #B8D955;
   border-radius: 50%;
   animation: ai-bounce 1.4s infinite ease-in-out both;
 }
@@ -268,7 +268,7 @@
 }
 
 .ai-welcome-icon svg {
-  fill: var(--ai-primary);
+  fill: #B8D955;
 }
 
 .ai-welcome-title {
@@ -305,8 +305,8 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  background: var(--ai-gradient);
-  color: white;
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
+  color: #333;
   border-radius: 50%;
   font-size: 12px;
   font-weight: 600;
@@ -314,11 +314,11 @@
 }
 
 .ai-config-btn {
-  background: var(--ai-gradient);
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
   border: none;
   border-radius: 8px;
   padding: 12px 24px;
-  color: white;
+  color: #333;
   cursor: pointer;
   font-weight: 500;
   font-size: 14px;
@@ -395,9 +395,9 @@
 }
 
 .ai-translate-trigger:hover {
-  background: var(--ai-primary);
-  border-color: var(--ai-primary);
-  color: white;
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
+  border-color: #B8D955;
+  color: #333;
 }
 
 /* 翻译弹窗 */
@@ -421,8 +421,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: var(--ai-gradient);
-  color: white;
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
+  color: #333;
 }
 
 .ai-translate-title {
@@ -433,7 +433,7 @@
 .ai-translate-close {
   background: none;
   border: none;
-  color: white;
+  color: #333;
   font-size: 18px;
   cursor: pointer;
   opacity: 0.8;
@@ -478,7 +478,7 @@
 .ai-translate-loading span {
   width: 8px;
   height: 8px;
-  background: var(--ai-primary);
+  background: #B8D955;
   border-radius: 50%;
   animation: ai-bounce 1.4s infinite ease-in-out both;
 }
@@ -513,7 +513,7 @@
 }
 
 .ai-translate-btn:hover {
-  background: var(--ai-primary);
-  border-color: var(--ai-primary);
-  color: white;
+  background: linear-gradient(135deg, #B8D955 0%, #9BC23A 100%);
+  border-color: #B8D955;
+  color: #333;
 }

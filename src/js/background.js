@@ -23,8 +23,8 @@ const DEFAULT_APPEARANCE = {
 // 主题配色
 const THEMES = {
   purple: { primary: '#667eea', secondary: '#764ba2' },
-  blue: { primary: '#2196F3', secondary: '#1976D2' },
-  green: { primary: '#4CAF50', secondary: '#388E3C' },
+  blue: { primary: '#EDF7BD', secondary: '#D4E89A' },
+  green: { primary: '#EDF7BD', secondary: '#D4E89A' },
   orange: { primary: '#FF9800', secondary: '#F57C00' },
   red: { primary: '#F44336', secondary: '#D32F2F' },
   pink: { primary: '#E91E63', secondary: '#C2185B' }
