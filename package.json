@@ -1,0 +1,12 @@
+{
+  "name": "miniquesion",
+  "version": "1.0.0",
+  "description": "A lightweight AI chat assistant for quick questions",
+  "private": true,
+  "scripts": {
+    "convert-icons": "node scripts/convert-icons.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}
