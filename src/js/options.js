@@ -46,7 +46,7 @@ let currentConfig = {
 
 let currentAppearance = {
   theme: 'blue',
-  icon: 'globe',
+  icon: 'cat',
   customIcon: null
 };
 

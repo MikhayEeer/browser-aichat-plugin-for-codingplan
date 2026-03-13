@@ -25,7 +25,7 @@ const state = {
   // 外观配置
   appearance: {
     theme: 'blue',
-    icon: 'globe',
+    icon: 'cat',
     customIcon: null
   }
 };
@@ -42,6 +42,7 @@ const THEMES = {
 
 // 预设图标 SVG
 const ICONS = {
+  cat: 'cat-icon',  // 使用 float-icon.png
   globe: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>',
   chat: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>',
   robot: '<svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2M7.5 13A2.5 2.5 0 005 15.5 2.5 2.5 0 007.5 18a2.5 2.5 0 002.5-2.5A2.5 2.5 0 007.5 13m9 0a2.5 2.5 0 00-2.5 2.5 2.5 2.5 0 002.5 2.5 2.5 2.5 0 002.5-2.5 2.5 2.5 0 00-2.5-2.5z"/></svg>',
@@ -225,7 +226,7 @@ function getCurrentModel() {
 // 应用外观配置
 function applyAppearance() {
   const { theme, icon, customIcon } = state.appearance;
-  const themeColors = THEMES[theme] || THEMES.purple;
+  const themeColors = THEMES[theme] || THEMES.blue;
 
   // 应用主题颜色 (CSS 变量)
   document.documentElement.style.setProperty('--ai-primary', themeColors.primary);
@@ -238,6 +239,10 @@ function applyAppearance() {
   const ball = document.getElementById('ai-float-ball');
   if (customIcon) {
     ball.innerHTML = `<img src="${customIcon}" alt="icon">`;
+  } else if (icon === 'cat') {
+    // 使用默认猫咪图标
+    const iconUrl = browser.runtime.getURL('src/assets/float-icon.png');
+    ball.innerHTML = `<img src="${iconUrl}" alt="miniQuestion">`;
   } else if (ICONS[icon]) {
     ball.innerHTML = ICONS[icon];
   }

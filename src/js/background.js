@@ -16,7 +16,7 @@ const DEFAULT_CONFIG = {
 // 默认外观配置
 const DEFAULT_APPEARANCE = {
   theme: 'blue',
-  icon: 'globe',
+  icon: 'cat',
   customIcon: null
 };
 
