@@ -50,6 +50,13 @@ const ICONS = {
   bolt: '<svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg>'
 };
 
+// 转义 HTML
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 // 创建容器
 const container = document.createElement('div');
 container.id = 'ai-float-container';
@@ -210,9 +217,24 @@ function renderModelSelector() {
   const models = state.config?.models || [];
   const selectedModel = state.config?.selectedModel || '';
 
-  modelSelect.innerHTML = models.length === 0
-    ? '<option value="">请先添加模型</option>'
-    : models.map(m => `<option value="${m.id}" ${m.id === selectedModel ? 'selected' : ''}>${m.name}</option>`).join('');
+  // 使用 DOM API 安全构建选项
+  modelSelect.innerHTML = '';
+  if (models.length === 0) {
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = '请先添加模型';
+    modelSelect.appendChild(option);
+  } else {
+    models.forEach(m => {
+      const option = document.createElement('option');
+      option.value = m.id;
+      option.textContent = m.name;
+      if (m.id === selectedModel) {
+        option.selected = true;
+      }
+      modelSelect.appendChild(option);
+    });
+  }
 }
 
 // 获取当前选中的模型
@@ -238,11 +260,22 @@ function applyAppearance() {
   // 应用图标
   const ball = document.getElementById('ai-float-ball');
   if (customIcon) {
-    ball.innerHTML = `<img src="${customIcon}" alt="icon">`;
+    // 验证 customIcon 是有效的 data URL
+    if (typeof customIcon === 'string' && customIcon.startsWith('data:image/')) {
+      const img = document.createElement('img');
+      img.src = customIcon;
+      img.alt = 'icon';
+      ball.innerHTML = '';
+      ball.appendChild(img);
+    }
   } else if (icon === 'cat') {
     // 使用默认猫咪图标
     const iconUrl = browser.runtime.getURL('src/assets/float-icon.png');
-    ball.innerHTML = `<img src="${iconUrl}" alt="miniQuestion">`;
+    const img = document.createElement('img');
+    img.src = iconUrl;
+    img.alt = 'miniQuestion';
+    ball.innerHTML = '';
+    ball.appendChild(img);
   } else if (ICONS[icon]) {
     ball.innerHTML = ICONS[icon];
   }
@@ -612,13 +645,23 @@ async function doTranslate(text) {
       text: text
     });
 
+    // 使用 DOM API 安全地显示结果
+    const span = document.createElement('span');
     if (response.success) {
-      resultDiv.innerHTML = `<span class="ai-translate-success">${response.data}</span>`;
+      span.className = 'ai-translate-success';
+      span.textContent = response.data;
     } else {
-      resultDiv.innerHTML = `<span class="ai-translate-error">翻译失败: ${response.error}</span>`;
+      span.className = 'ai-translate-error';
+      span.textContent = '翻译失败: ' + response.error;
     }
+    resultDiv.innerHTML = '';
+    resultDiv.appendChild(span);
   } catch (e) {
-    resultDiv.innerHTML = `<span class="ai-translate-error">请求失败: ${e.message}</span>`;
+    const span = document.createElement('span');
+    span.className = 'ai-translate-error';
+    span.textContent = '请求失败: ' + e.message;
+    resultDiv.innerHTML = '';
+    resultDiv.appendChild(span);
   } finally {
     state.isTranslating = false;
   }

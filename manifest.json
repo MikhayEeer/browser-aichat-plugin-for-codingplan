@@ -5,6 +5,18 @@
   "description": "A lightweight AI chat assistant for quick questions. Bring your own API key.",
   "author": "Danzel",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "miniQuestion@danzel.dev",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["browsingActivity"],
+        "optional": [],
+        "disclaimed_affected": "none"
+      }
+    }
+  },
+
   "permissions": [
     "storage",
     "activeTab",
@@ -21,6 +33,7 @@
   },
 
   "background": {
+    "scripts": ["src/js/background.js"],
     "service_worker": "src/js/background.js",
     "type": "module"
   },

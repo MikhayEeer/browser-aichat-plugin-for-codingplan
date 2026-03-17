@@ -99,7 +99,7 @@ function renderModelList() {
         <div class="model-value">${escapeHtml(model.model)}</div>
       </div>
       <div class="model-actions">
-        <button class="btn btn-small btn-secondary select-model-btn" data-id="${model.id}">
+        <button class="btn btn-small btn-secondary select-model-btn" data-id="${escapeHtml(model.id)}">
           ${currentConfig.selectedModel === model.id ? '当前' : '选择'}
         </button>
         <button class="btn btn-small btn-danger delete-model-btn" data-index="${index}">删除</button>
