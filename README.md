@@ -1,4 +1,4 @@
-# miniQuestion
+# miniQuestion.
 
 [English](./docs/README_EN.md) | 中文
 
